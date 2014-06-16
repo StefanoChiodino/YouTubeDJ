@@ -1,1 +1,1 @@
-a:2:{i:0;s:11:"NAuuT0-byIg";i:1;s:11:"oXQqzTGoPxc";}
+a:2:{i:0;a:4:{s:4:"ytID";s:11:"NAuuT0-byIg";s:11:"isDuplicate";s:5:"false";s:9:"isInvalid";s:5:"false";s:5:"title";s:57:"LCS 2014 EU Spring W1D3 + EU Challenger Spring 1: Play-In";}i:1;a:4:{s:4:"ytID";s:11:"oXQqzTGoPxc";s:11:"isDuplicate";s:5:"false";s:9:"isInvalid";s:5:"false";s:5:"title";s:30:"XDG vs TSM - 2014 NA LCS W11D3";}}

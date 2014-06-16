@@ -12,13 +12,20 @@
     <script type="application/javascript" src="js/script.js"></script>
 </head>
 <body>
-    <div class="page-header">
-        <h1>YoutTube DJ <small>A collaborative video queue</small></h1>
-    </div>
-    <div class="container">
+<header class="page-header text-center">
+    <h1>YoutTube DJ
+        <small>A collaborative video queue</small>
+    </h1>
+</header>
+<div class="container">
+    <div class="row">
+        test
+        <input type="text" value="NAuuT0-byIg"/>
+        <input type="text" value="oXQqzTGoPxc"/>
+
         <div ng-controller="SubmitVideoController as submitVideo">
             <div ng-show="video.isDuplicate" class="alert alert-danger">
-                That's a duplicate!<br />
+                That's a duplicate!<br/>
                 That's a duplicate!
             </div>
             <div ng-show="video.isInvalid" class="alert alert-danger">
@@ -26,24 +33,36 @@
             </div>
             <form name="videoForm" ng-submit="videoForm.$valid && submitVideo.validate(submitVideo.submit)" novalidate>
                 <div class="form-group">
-                    <input class="form-control" type="text" ng-model="video.ytID" name="ytID" placeholder="YouTube ID" required autofocus />
+                    <input class="form-control" type="text" ng-model="video.ytID" name="ytID" id="ytID"
+                           placeholder="YouTube ID"
+                           required autofocus/>
                 </div>
-                <button class="btn btn-default">Add</button>
+                <button ng-hide="results.length" class="btn btn-default">Add</button>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" ng-repeat="result in results">
+                        <div class="thumbnail">
+                            <img ng-src="{{result.media$group.media$thumbnail[0].url}}"/>
+
+                            <h3>{{result.title.$t}}</h3>
+
+                            <p>
+                                <a href="#" class="btn btn-primary" role="button" ng-click="video.ytID = {{result.id.$t}}; submit()">Add</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
+    </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Q</h3>
-            </div>
-            <div class="panel-body">
-                <div ng-controller="ListVideoController as listVideo">
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="video in videos">{{video}}</li>
-                    </ul>
-                </div>
-            </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div ng-controller="ListVideoController as listVideo">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="video in videos">{{video.title}}</li>
+            </ul>
         </div>
     </div>
+</div>
 </body>
 </html>

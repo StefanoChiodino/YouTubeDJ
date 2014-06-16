@@ -5,3 +5,7 @@
 input.ng-valid.ng-dirty {
     background-color: #78FA89;
 }*/
+
+.thumbnail h3 {
+    height: 104px;
+}

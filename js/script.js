@@ -3,17 +3,18 @@
 
     app.controller('SubmitVideoController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
         $scope.video = {};
+        $scope.results = {};
         $rootScope.videos = [];
 
         this.submit = function () {
             $http({
                 url: 'videoPush.php',
                 method: "POST",
-                data: "ytID=" + $scope.video.ytID,
+                data: $.param($scope.video),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             })
                 .success(function () {
-                    $rootScope.videos.push($scope.video.ytID);
+                    $rootScope.videos.push($scope.video);
                     $scope.video = {};
                 });
         };
@@ -23,7 +24,7 @@
             $scope.video.isInvalid = false;
             $scope.successCallback = successCallback;
 
-            if ($.inArray($scope.video.ytID, $rootScope.videos) > - 1) {
+            if (isVideoInArray($scope.video, $rootScope.videos)) {
                 $scope.video.isDuplicate = true;
                 return false;
             }
@@ -34,11 +35,22 @@
             })
                 .success(function (data) {
                     if (data.entry.id != false) {
-                        $scope.successCallback();
+                        //adds the title
+                        // TODO: separate in appropriate funct
+                        $scope.video.title = data.entry.title.$t;
+                        $scope.successCallback(data.entry.title);
                     }
                 })
                 .error(function () {
-                    $scope.video.isInvalid = true;
+                    //$scope.video.isInvalid = true;
+
+                    $http({
+                        url: 'http://gdata.youtube.com/feeds/api/videos?max-results=4&v=2&alt=json&q=' + $scope.video.ytID,
+                        method: "GET"
+                    })
+                        .success(function (data) {
+                            $scope.results = data.feed.entry;
+                        });
                 });
 
         };
@@ -56,3 +68,11 @@
             });
     }]);
 })();
+
+function isVideoInArray(video, videos) {
+    for (var i = 0; i < videos.length; i++) {
+        if (videos[i].ytID == video.ytID)
+            return true;
+    }
+    return false;
+}

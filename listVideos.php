@@ -1,6 +1,8 @@
 <?php
 	$filename = "playlist.txt";
-	$videos = unserialize(file_get_contents ($filename));
-	if($videos)
-	    echo json_encode($videos);
+	$videos = Array();
+	$fileVideos = unserialize(file_get_contents ($filename));
+    if(is_array($fileVideos))
+        $videos = $fileVideos;
+    echo json_encode($videos);
 ?>
