@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html ng-app="dj">
+<head>
+    <title></title>
+    <script type="application/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="application/javascript"
+            src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.11/angular.min.js"></script>
+    <script type="application/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+    <script type="application/javascript" src="js/script.js"></script>
+</head>
+<body>
+<div ng-controller="SubmitVideoController as submitVideo">
+    <div ng-show="video.isDuplicate">
+        That's a duplicate!<br/>
+        That's a duplicate!
+    </div>
+    <div ng-show="video.isInvalid">
+        C'mon Ben, focus! You can do it!
+    </div>
+    <form name="videoForm" ng-submit="videoForm.$valid && submitVideo.validate(submitVideo.submit)" novalidate>
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="video.ytID" name="ytID" placeholder="YouTube ID" required autofocus/>
+        </div>
+        <button class="btn btn-default">Add</button>
+    </form>
+</div>
+
+<div ng-controller="ListVideoController as listVideo">
+    <h2>Q</h2>
+    <ol>
+        <li ng-repeat="video in videos">{{video}}</li>
+    </ol>
+</div>
+</body>
+</html>
