@@ -12,27 +12,38 @@
     <script type="application/javascript" src="js/script.js"></script>
 </head>
 <body>
-<div ng-controller="SubmitVideoController as submitVideo">
-    <div ng-show="video.isDuplicate">
-        That's a duplicate!<br/>
-        That's a duplicate!
+    <div class="page-header">
+        <h1>YoutTube DJ <small>A collaborative video queue</small></h1>
     </div>
-    <div ng-show="video.isInvalid">
-        C'mon Ben, focus! You can do it!
-    </div>
-    <form name="videoForm" ng-submit="videoForm.$valid && submitVideo.validate(submitVideo.submit)" novalidate>
-        <div class="form-group">
-            <input class="form-control" type="text" ng-model="video.ytID" name="ytID" placeholder="YouTube ID" required autofocus/>
+    <div class="container">
+        <div ng-controller="SubmitVideoController as submitVideo">
+            <div ng-show="video.isDuplicate" class="alert alert-danger">
+                That's a duplicate!<br />
+                That's a duplicate!
+            </div>
+            <div ng-show="video.isInvalid" class="alert alert-danger">
+                C'mon Ben, focus! You can do it!
+            </div>
+            <form name="videoForm" ng-submit="videoForm.$valid && submitVideo.validate(submitVideo.submit)" novalidate>
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="video.ytID" name="ytID" placeholder="YouTube ID" required autofocus />
+                </div>
+                <button class="btn btn-default">Add</button>
+            </form>
         </div>
-        <button class="btn btn-default">Add</button>
-    </form>
-</div>
 
-<div ng-controller="ListVideoController as listVideo">
-    <h2>Q</h2>
-    <ol>
-        <li ng-repeat="video in videos">{{video}}</li>
-    </ol>
-</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Q</h3>
+            </div>
+            <div class="panel-body">
+                <div ng-controller="ListVideoController as listVideo">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="video in videos">{{video}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
