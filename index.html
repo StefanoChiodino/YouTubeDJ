@@ -3,13 +3,13 @@
 <head>
     <title></title>
     <script type="application/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="application/javascript"
-            src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.11/angular.min.js"></script>
-    <script type="application/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
+    <!--<script type="application/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">
-    <script type="application/javascript" src="js/script.js"></script>
+    <script type="application/javascript" src="js/frntScript.js"></script>
 </head>
 <body>
 <header class="page-header text-center">
@@ -18,51 +18,48 @@
     </h1>
 </header>
 <div class="container">
-    <div class="row">
-        test
-        <input type="text" value="NAuuT0-byIg"/>
-        <input type="text" value="oXQqzTGoPxc"/>
-
-        <div ng-controller="SubmitVideoController as submitVideo">
-            <div ng-show="video.isDuplicate" class="alert alert-danger">
-                That's a duplicate!<br/>
-                That's a duplicate!
+    <div ng-controller="VideoController as videoCtrl">
+        <div class="row">
+            <div ng-show="errorMessage" class="alert alert-danger">
+                {{errorMessage}}
             </div>
-            <div ng-show="video.isInvalid" class="alert alert-danger">
-                C'mon Ben, focus! You can do it!
-            </div>
-            <form name="videoForm" ng-submit="videoForm.$valid && submitVideo.validate(submitVideo.submit)" novalidate>
+            <form name="videoForm" ng-submit="videoCtrl.search()" novalidate>
                 <div class="form-group">
-                    <input class="form-control" type="text" ng-model="video.ytID" name="ytID" id="ytID"
-                           placeholder="YouTube ID"
+                    <input class="form-control" type="text" ng-model="search.text" name="searchText" id="searchText"
+                           placeholder="Search on You Tube"
+                           ng-model="asyncSelected"
+                           typeahead="queries for queries in getAutocompletion($viewValue)"
+                           typeahead-loading="loadingAutocompletion"
                            required autofocus/>
+                    <i ng-show="loadingAutocompletion" class="glyphicon glyphicon-refresh"></i>
                 </div>
                 <button ng-hide="results.length" class="btn btn-default">Add</button>
-                <div class="row">
-                    <div class="col-sm-6 col-md-3" ng-repeat="result in results">
-                        <div class="thumbnail">
-                            <img ng-src="{{result.media$group.media$thumbnail[0].url}}"/>
-
-                            <h3>{{result.title.$t}}</h3>
-
-                            <p>
-                                <a href="#" class="btn btn-primary" role="button" ng-click="video.ytID = {{result.id.$t}}; submit()">Add</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
-    </div>
 
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div ng-controller="ListVideoController as listVideo">
+        <div class="row">
+            <div class="col-sm-6 col-md-3" ng-repeat="result in results">
+                <div class="thumbnail">
+                    <img ng-src="http://i.ytimg.com/vi/{{result.id.$t.split(':').reverse()[0]}}/mqdefault.jpg"/>
+
+                    <h3>{{result.title.$t}}</h3>
+
+                    <p>
+                        <button class="btn btn-primary" ng-click="videoCtrl.addVideo(result)">Add</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="video in videos">{{video.title}}</li>
+                <li class="list-group-item" ng-repeat="video in videos">{{video.title.$t}}</li>
             </ul>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

@@ -8,4 +8,5 @@ input.ng-valid.ng-dirty {
 
 .thumbnail h3 {
     height: 104px;
+    overflow: hidden;
 }

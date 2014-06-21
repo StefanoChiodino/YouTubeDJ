@@ -1,8 +1,8 @@
 ﻿var player;
 
 function playNextVideo() {
-    $.getJSON("videoPop.php", function (videoID) {
-        player.loadVideoById(videoID);
+    $.getJSON("videoPop.php", function (video) {
+        player.loadVideoById(video.id.$t.split(':').reverse()[0]);
     });
 }
 
@@ -21,7 +21,7 @@ function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
             events: {
                 'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange,
+                'onStateChange': onPlayerStateChange
             }
         });
     });
