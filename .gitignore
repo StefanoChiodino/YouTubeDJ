@@ -1,7 +1,11 @@
 #################
+## Intellij Idea
+#################
+.idea/
+
+#################
 ## Eclipse
 #################
-
 *.pydevproject
 .project
 .metadata
